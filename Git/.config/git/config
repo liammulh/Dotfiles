@@ -1,0 +1,9 @@
+[user]
+	email = liammulh@gmail.com
+	name = Liam Mulhall
+[core]
+	editor = vim
+	excludesFile = ~/.config/git/ignore
+	autocrlf = input
+[init]
+	defaultBranch = main

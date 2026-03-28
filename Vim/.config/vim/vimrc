@@ -1,0 +1,10 @@
+syntax off         " Toggle syntax highlighting.
+set textwidth=72   " Set limit for characters on one line.
+set colorcolumn=72 " Show column at n characters.
+set tabstop=4      " Make tabs n spaces.
+set expandtab      " Use spaces instead of tabs.
+set shiftwidth=4   " Set number of spaces when using > or >>.
+set tabstop=4      " Set how a real tab is displayed.
+set softtabstop=4  " Set how many spaces are inserted or deleted when pressing <Tab> or <Backspace>.
+set scrolloff=20   " Start vertical scrolling n lines before the bottom of the window.
+set belloff=all    " Toggle bell stuff.
