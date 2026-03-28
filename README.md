@@ -27,6 +27,6 @@ Emacs/
       |_init.el
 ```
 
-Then when you've installed Emacs, use `stow Emacs` to create a symlink
-file in `~/.config/emacs/init.el` that points to the file in this
-repository.
+Then when you've installed Emacs, use `stow --target=$HOME Emacs` to
+create a symlink file in `~/.config/emacs/init.el` that points to the
+file in this repository.
