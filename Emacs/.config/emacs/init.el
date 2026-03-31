@@ -6,6 +6,16 @@
 (package-initialize)
 
 ;;=====================================================================
+;; Litter Files
+;;=====================================================================
+;; Disable backup files (file~)
+(setq make-backup-files nil)
+;; Disable auto-save files (#file#)
+(setq auto-save-default nil)
+;; Disable lockfiles (.#file)
+(setq create-lockfiles nil)
+
+;;=====================================================================
 ;; Theme
 ;;=====================================================================
 (unless (package-installed-p 'gruvbox-theme)
