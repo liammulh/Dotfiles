@@ -1,4 +1,4 @@
 theme = "gruvbox"
 
-[editor.file-picker]
-hidden = false
+[editor]
+text-width = 72
