@@ -30,3 +30,9 @@ GIT_PS1_SHOWSTASHSTATE="yes"
 GIT_PS1_SHOWUPSTREAM="auto"
 GIT_PS1_SHOWCONFLICTSTATE="yes"
 GIT_PS1_SHOWCOLORHINTS="yes"
+
+#=================================================
+# Neovim Linux Config
+#=================================================
+
+export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
