@@ -32,7 +32,16 @@ GIT_PS1_SHOWCONFLICTSTATE="yes"
 GIT_PS1_SHOWCOLORHINTS="yes"
 
 #=================================================
-# Neovim Linux Config
+# PATH Setup
 #=================================================
 
-export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+export PATH="$HOME/.local/bin:$PATH"
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export PATH="$PATH:/opt/homebrew/bin"
+fi
+
+case ":${PATH}:" in
+    *:"$HOME/.cargo/bin":*) ;;
+    *) export PATH="$HOME/.cargo/bin:$PATH" ;;
+esac
