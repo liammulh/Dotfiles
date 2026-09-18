@@ -1,10 +1,12 @@
 Neovim Config
 =======================================================================
 
-This is my Neovim configuration. Since plugins change all the time, I
-thought I'd describe the features of my configuration in an abstract
-way. I try to keep the configuration as minimal and modular as
-possible.
+This is my Neovim configuration. It is built on
+[LazyVim](https://www.lazyvim.org), which supplies the plugin set,
+keymaps and sensible defaults. What lives here is only my own
+additions and overrides on top of that, so this README describes what
+I changed rather than everything LazyVim provides. For the defaults,
+see the LazyVim keymap and plugin documentation.
 
 Structure
 -----------------------------------------------------------------------
@@ -13,143 +15,88 @@ Structure
 .config/
 |_nvim/
   |_init.lua
+  |_lazy-lock.json
+  |_lazyvim.json
+  |_stylua.toml
   |_lua/
-    |_keymaps.lua
-    |_options.lua
-    |_features/
-      |_autocomplete.lua
+    |_config/
+      |_autocmds.lua
+      |_keymaps.lua
+      |_lazy.lua
+      |_options.lua
+    |_plugins/
       |_colorscheme.lua
-      |_file-explorer.lua
-      |_git-status-indicator.lua
-      |_keymap-info-window.lua
-      |_lsp.lua
-      |_search.lua
-      |_statusline.lua
-      |_tabs.lua
-      |_terminal-drawer.lua
+      |_completion.lua
+      |_example.lua
+      |_lang-lsp.lua
+      |_pane-navigation.lua
 ```
 
-Basics
+`init.lua`, `lua/config/` and `example.lua` come from the LazyVim
+starter template. `example.lua` is inert; it returns an empty spec and
+is kept only as a reference for the spec syntax. `lazyvim.json` records
+which LazyVim extras are enabled, and `lazy-lock.json` pins every
+plugin to a specific commit, so both need to be committed.
+
+Extras
 -----------------------------------------------------------------------
 
-### Keymaps `keymaps.lua`
+These LazyVim extras are enabled, recorded in `lazyvim.json`:
 
-To more easily switch between windows, I've set up these keymaps:
+- dap.core: debugging
+- formatting.prettier
+- linting.eslint
+- lang.json, lang.python, lang.rust, lang.toml, lang.typescript
 
-- <ctrl>-h: switch window left
-- <ctrl>-j: switch window down
-- <ctrl>-k: switch window up
-- <ctrl>-l: switch window right
-
-To easily switch tabs:
-
-- <shift>-h: switch to the left tab
-- <shift>-l: switch to the right tab
-
-To resize windows:
-
-- <alt>-h: increase size to the left
-- <alt>-j: increase size down
-- <alt>-k: increase size up
-- <alt>-l: increase size to the right
-
-To close a tab:
-
-- <space>-c: close the current tab
-
-### Options `options.lua`
-
-Contains basic Neovim options.
-
-Features
+Customizations
 -----------------------------------------------------------------------
 
-### Autocomplete `autocomplete.lua`
+### Options `lua/config/options.lua`
 
-I have auto-suggestions (LSP) set up for the following programming
-languages:
+Picks which language servers the LazyVim language extras should use:
+basedpyright and ruff for Python, rust-analyzer for Rust diagnostics,
+and vtsls for TypeScript. Prettier is also restricted to projects that
+actually contain a Prettier config file, which keeps format-on-save
+from reformatting Django templates, Markdown and YAML in repositories
+that do not use it.
 
-- Python
+### Color Scheme `lua/plugins/colorscheme.lua`
 
-When the window with auto-suggestions pops up, I can hit <tab> to accept
-the top suggestion, and I can use the arrow keys to move up and down in
-the list of auto-suggestions.
+I use the gruvbox color scheme in dark mode with medium contrast, to
+match my Alacritty colors.
 
-### Color Scheme `colorscheme.lua`
+### Completion `lua/plugins/completion.lua`
 
-I use the popular Gruvbox color scheme. I use the dark variant.
+LazyVim ships blink.cmp with its "enter" keymap preset, where <cr>
+accepts the highlighted completion item and <tab> only jumps between
+snippet placeholders. I use blink's "super-tab" preset instead, so
+<tab> accepts, which is what I am used to from VS Code and the
+JetBrains IDEs. The preset drops <cr>, so I add it back and can use
+either key. The first item in the menu is highlighted automatically;
+that is a blink default, not something set here.
 
-### File Explorer `file-explorer.lua`
+### Language Servers `lua/plugins/lang-lsp.lua`
 
-The file explorer lists files and directories relative to the directory
-where Neovim was opened. It shows hidden files.
+Extra tuning on top of the Python and Rust extras. Both get a full set
+of inlay hints and code lens. Python type checking is set to standard
+mode over open files only, rather than the whole workspace, which is
+slow on large repositories. Rust uses clippy for on-save diagnostics
+instead of plain cargo check.
 
-### Git Status Indicator `git-status-indicator.lua`
+### Pane Navigation `lua/plugins/pane-navigation.lua`
 
-Shows Git change indicators (added, modified, removed lines) in the
-gutter. All keymaps use <space>-g as a prefix.
+I move between Neovim windows and tmux panes as though they were one
+grid:
 
-Navigation:
+- <ctrl>-h: switch window or pane left
+- <ctrl>-j: switch window or pane down
+- <ctrl>-k: switch window or pane up
+- <ctrl>-l: switch window or pane right
+- <ctrl>-\: switch to the previous window or pane
 
-- ]c: next hunk
-- [c: previous hunk
-
-Hunk actions:
-
-- <space>-g-s: stage hunk
-- <space>-g-r: reset hunk
-- <space>-g-S: stage buffer
-- <space>-g-R: reset buffer
-- <space>-g-u: undo stage hunk
-- <space>-g-p: preview hunk
-- <space>-g-b: blame line
-- <space>-g-d: diff this
-- <space>-g-D: diff this against ~
-
-Toggles:
-
-- <space>-g-t-b: toggle current line blame
-- <space>-g-t-d: toggle deleted
-
-Text object:
-
-- ih: select hunk (operator and visual mode)
-
-### Keymap Info Window `keymap-info-window.lua`
-
-When I press the leader key (the space key), I see a window that shows
-my custom keymaps:
-
-- <space>-c: close the current tab
-- <space>-e: opens and closes the file explorer
-- <space>-t: toggles the terminal drawer
-- <space>-f-f: opens the file search window
-- <space>-f-g: opens the grep window
-- <space>-g: git actions
-
-### Language Server Protocol `lsp.lua`
-
-Configures LSP using Mason to automatically install language servers.
-Uses Neovim's native LSP API. Currently configured for Python (pyright).
-
-### Search Windows `search.lua`
-
-- <space>-f-f: opens a fuzzy file search window.
-- <space>-f-g: opens a grep window for recursively searching files.
-
-### Status Line `statusline.lua`
-
-Configures a more attractive status line compatible with the color
-scheme.
-
-### Tabs `tabs.lua`
-
-When a file is opened, it opens in a new tab.
-
-### Terminal Drawer `terminal-drawer.lua`
-
-The terminal drawer can be popped open and closed and maintains its
-state. Its directory is inherited from the directory where Neovim was
-opened. When the terminal is opened, it starts in insert mode. Pressing
-escape twice exits insert mode and enters normal mode, from which the
-terminal can be toggled shut with <space>-t.
+When there is no Neovim window in the direction I press, Neovim hands
+the key off to tmux, which moves to the neighboring pane instead. These
+keymaps deliberately shadow the LazyVim defaults, which only move
+between Neovim windows. The tmux half of this is in this repository's
+tmux configuration, and the two halves have to agree, so change them
+together.

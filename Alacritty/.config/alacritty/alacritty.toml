@@ -1,10 +1,19 @@
 [general]
-import = [
-    "~/.config/alacritty/themes/themes/gruvbox_dark.toml"
-]
+import = ["~/.config/alacritty/themes/themes/gruvbox_dark.toml"]
 
 [font]
 size = 12.0
 [font.normal]
 family = "DepartureMono Nerd Font Mono"
 style = "Regular"
+
+# Blink the cursor so the active tmux pane is easy to spot. "Always"
+# forces blinking on regardless of what the running program asks for,
+# which matters inside tmux. A blink_timeout of 0 means the cursor
+# keeps blinking instead of going solid after a few seconds.
+[cursor]
+blink_interval = 600
+blink_timeout = 0
+[cursor.style]
+shape = "Block"
+blinking = "Always"
