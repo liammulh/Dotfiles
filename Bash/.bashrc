@@ -10,7 +10,7 @@ set -o vi
 #=================================================
 
 alias c="clear"
-alias l="eza --long --git --all --color=always --icons=always"
+alias l="ls -ahl"
 alias ..="cd .."
 
 #=================================================
