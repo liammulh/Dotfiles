@@ -1,0 +1,5 @@
+# Tabs on H and L, history on J and K.
+map H previousTab
+map L nextTab
+map J goBack
+map K goForward
