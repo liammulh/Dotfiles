@@ -48,6 +48,9 @@ export PATH="$HOME/.local/bin:$PATH"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export PATH="$PATH:/opt/homebrew/bin"
+else
+  # On Linux. Make sure Neovim is on PATH.
+  export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
 fi
 
 case ":${PATH}:" in
