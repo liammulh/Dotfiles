@@ -23,7 +23,8 @@ source ~/.config/bash/git-prompt.sh
 # (1) basename of working directory
 # (2) Git prompt
 # (3) exit status of last command
-PROMPT_COMMAND='PS1_CMD1=$(__git_ps1 "(%s)")'; PS1='\W ${PS1_CMD1} $? '
+PROMPT_COMMAND='PS1_CMD1=$(__git_ps1 "(%s)")'
+PS1='\W ${PS1_CMD1} $? '
 
 GIT_PS1_SHOWDIRTYSTATE="yes"
 GIT_PS1_SHOWSTASHSTATE="yes"
@@ -38,10 +39,17 @@ GIT_PS1_SHOWCOLORHINTS="yes"
 export PATH="$HOME/.local/bin:$PATH"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    export PATH="$PATH:/opt/homebrew/bin"
+  export PATH="$PATH:/opt/homebrew/bin"
 fi
 
 case ":${PATH}:" in
-    *:"$HOME/.cargo/bin":*) ;;
-    *) export PATH="$HOME/.cargo/bin:$PATH" ;;
+*:"$HOME/.cargo/bin":*) ;;
+*) export PATH="$HOME/.cargo/bin:$PATH" ;;
 esac
+
+#=================================================
+# zoxide
+# https://github.com/ajeetdsouza/zoxide
+#=================================================
+
+eval "$(zoxide init bash)"
