@@ -29,7 +29,7 @@ between its own windows first. Once the editor runs out of windows in
 that direction, it tells tmux to switch panes, so windows and panes
 behave like one continuous grid. The editor half of this is the
 vim-tmux-navigator plugin, configured in
-`Neovim/.config/nvim/lua/features/pane-navigation.lua`.
+`Neovim/.config/nvim/lua/plugins/pane-navigation.lua`.
 
 Since <ctrl>-l switches panes rather than clearing the screen, the
 screen is cleared with <prefix> <ctrl>-l, where <prefix> is the
@@ -41,8 +41,9 @@ the current pane vertically and <prefix> " splits it horizontally.
 Active Pane
 -----------------------------------------------------------------------
 
-The active pane is marked with a heavy border in gruvbox orange.
-Inactive borders are a muted gray.
+The active pane is marked with a heavy border in the palette's yellow,
+which zenbones renders as a rust brown. Inactive borders are the
+palette's bright black, a step off the background in either direction.
 
 Alacritty is configured to blink the cursor, which is a second cue:
 the pane with the blinking cursor is the active one.
@@ -59,13 +60,23 @@ window name in colour7 and the index and flags in colour2, so the
 active window reads as brighter than its neighbors rather than being
 marked with a highlight.
 
-The colors here are palette slots rather than hex, unlike the pane
-borders above. That is deliberate: the bar is drawn in whatever the
-terminal maps colour0, colour2 and colour7 to, so it follows the theme
-Alacritty is set to instead of pinning the bar to gruvbox.
-
 The current window also sets `bg=colour0`, which does nothing under
-gruvbox dark: colour0 and the terminal background are both #282828.
-It is there so the window still reads as active under a theme whose
-black differs from its background. Bold versus dim is what actually
-distinguishes the active window here.
+either zenbones variant: colour0 and the terminal background are the
+same color in both. It is there so the window still reads as active
+under a theme whose black differs from its background. Bold versus
+dim is what actually distinguishes the active window here.
+
+Light and Dark
+-----------------------------------------------------------------------
+
+Every color in this file is a palette slot rather than hex. That is
+deliberate, and it is the whole of tmux's involvement in switching
+between the light and dark zenbones variants: tmux draws in whatever
+the terminal maps colour0, colour2, colour3, colour7 and colour8 to,
+so when Alacritty reloads its palette, tmux follows. Nothing reloads
+tmux, and switching does not have to know it is running. See the Theme
+section of the top-level `README.md`.
+
+This is also why nothing here is pinned to a specific hex value, even
+where a specific color is wanted. A hardcoded border color would
+survive a switch unchanged and end up fighting the new background.

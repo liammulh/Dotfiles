@@ -1,6 +1,11 @@
 [general]
+# The palette is not set here. It is a generated file, which is what
+# makes light and dark switchable at runtime: Alacritty watches the
+# files it imports and reloads when one of them changes. The Theme
+# section of the repository README has the two commands that write it;
+# it has to be created once on a new machine.
 import = [
-    "~/.config/alacritty/themes/themes/gruvbox_dark.toml"
+    "~/.local/state/theme/alacritty.toml"
 ]
 
 [font]

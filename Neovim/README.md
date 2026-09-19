@@ -62,8 +62,27 @@ that do not use it.
 
 ### Color Scheme `lua/plugins/colorscheme.lua`
 
-I use the gruvbox color scheme in dark mode with medium contrast, to
-match my Alacritty colors.
+[Zenbones](https://github.com/zenbones-theme/zenbones.nvim), in
+whichever of its light and dark variants Alacritty is currently using.
+Lush is pulled in as a dependency; without it zenbones falls back to a
+compatibility mode that ignores its options.
+
+Which variant to use is not decided here. It is read from
+`~/.local/state/theme/mode`, a generated file that is written
+alongside the terminal's palette, so that the editor, the terminal and
+tmux switch together. See the Theme section of the top-level
+`README.md`.
+
+That file is also watched while Neovim is running, so switching in one
+tmux pane repaints the editor in every other pane. The watch is on the
+containing directory rather than on the file, because a watch on a
+file is lost the moment that file is replaced rather than rewritten.
+
+Setting `background` is the whole of the switch: Neovim reloads the
+colorscheme when `background` changes, and zenbones reads `background`
+rather than setting it, so the two cooperate. Assigning the value it
+already has does nothing, which is why the spurious events from the
+other file in that directory are harmless.
 
 ### Completion `lua/plugins/completion.lua`
 
