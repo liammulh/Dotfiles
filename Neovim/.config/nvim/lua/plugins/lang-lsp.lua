@@ -1,4 +1,4 @@
--- Extra LSP tuning for Python and Rust, on top of the LazyVim lang extras.
+-- Extra LSP tuning for Python, Rust, and Java, on top of the LazyVim lang extras.
 return {
   {
     "neovim/nvim-lspconfig",
@@ -85,6 +85,41 @@ return {
             -- Expand proc macros and build scripts for accurate analysis.
             procMacro = { enable = true },
             cargo = { buildScripts = { enable = true } },
+          },
+        },
+      },
+    },
+  },
+
+  {
+    "mfussenegger/nvim-jdtls",
+    opts = {
+      settings = {
+        java = {
+          signatureHelp = { enabled = true, description = { enabled = true } },
+          -- Code lens for references and implementations.
+          referencesCodeLens = { enabled = true },
+          implementationsCodeLens = { enabled = true },
+          -- Pull library sources so go-to-definition shows real code, and
+          -- fall back to a decompiler when sources aren't available.
+          eclipse = { downloadSources = true },
+          maven = { downloadSources = true },
+          contentProvider = { preferred = "fernflower" },
+          -- Suggest these static imports in completion (test assertions etc.).
+          completion = {
+            favoriteStaticMembers = {
+              "org.junit.jupiter.api.Assertions.*",
+              "org.junit.jupiter.api.Assumptions.*",
+              "org.assertj.core.api.Assertions.*",
+              "org.mockito.Mockito.*",
+              "org.mockito.ArgumentMatchers.*",
+              "java.util.Objects.requireNonNull",
+              "java.util.Objects.requireNonNullElse",
+            },
+          },
+          -- Never collapse imports into wildcards.
+          sources = {
+            organizeImports = { starThreshold = 9999, staticStarThreshold = 9999 },
           },
         },
       },
