@@ -38,6 +38,23 @@ default <ctrl>-b.
 Panes themselves are created with the tmux defaults: <prefix> % splits
 the current pane vertically and <prefix> " splits it horizontally.
 
+Pane Resizing
+-----------------------------------------------------------------------
+
+- <ctrl>-<shift>-h: move the pane border left
+- <ctrl>-<shift>-j: move the pane border down
+- <ctrl>-<shift>-k: move the pane border up
+- <ctrl>-<shift>-l: move the pane border right
+
+These keys need no prefix. Each press moves the border two cells, so
+holding one down drags the border until the pane is the right size.
+
+Terminals normally send <ctrl>-<shift>-h as the same byte as
+<ctrl>-h, so tmux cannot tell them apart on its own. Alacritty is
+configured to send these four keys as CSI u sequences, which tmux
+understands because `extended-keys` is on. Under another terminal,
+these keys will switch panes instead of resizing them.
+
 Active Pane
 -----------------------------------------------------------------------
 

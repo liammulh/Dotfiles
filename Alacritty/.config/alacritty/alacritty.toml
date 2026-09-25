@@ -19,6 +19,30 @@ key = "Return"
 mods = "Shift"
 chars = "\u001B\r"
 
+# Send <ctrl>-<shift>-h/j/k/l as CSI u sequences so that tmux can tell
+# them apart from <ctrl>-h/j/k/l and use them to resize panes. 104,
+# 106, 107 and 108 are the codepoints of h, j, k and l; the 6 means
+# ctrl plus shift.
+[[keyboard.bindings]]
+key = "H"
+mods = "Control|Shift"
+chars = "\u001B[104;6u"
+
+[[keyboard.bindings]]
+key = "J"
+mods = "Control|Shift"
+chars = "\u001B[106;6u"
+
+[[keyboard.bindings]]
+key = "K"
+mods = "Control|Shift"
+chars = "\u001B[107;6u"
+
+[[keyboard.bindings]]
+key = "L"
+mods = "Control|Shift"
+chars = "\u001B[108;6u"
+
 # Blink the cursor so the active tmux pane is easy to spot. "Always"
 # forces blinking on regardless of what the running program asks for,
 # which matters inside tmux. A blink_timeout of 0 means the cursor
