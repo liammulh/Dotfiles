@@ -14,6 +14,24 @@ Structure
   |_tmux.conf
 ```
 
+Copying
+-----------------------------------------------------------------------
+
+- <prefix> [: enter copy mode
+- v: start a selection
+- <ctrl>-v: switch the selection between lines and a rectangle
+- y: copy the selection to the system clipboard and leave copy mode
+
+These match yanking in Neovim, except that y always goes to the system
+clipboard, so there is no need for "+y. Enter still copies too.
+
+tmux puts the text on the clipboard by sending the terminal an OSC 52
+escape sequence rather than calling a tool like pbcopy, so this works
+the same on macOS and Linux, and over SSH. tmux only sends OSC 52 to
+terminals it believes support it, and by default that means xterm*,
+so the config adds Alacritty to that list. Alacritty accepts OSC 52
+copies by default.
+
 Pane Navigation
 -----------------------------------------------------------------------
 
